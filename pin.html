@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+    <link href="./css/pin.css" rel="stylesheet" />
+    <title>PIN Entry</title>
+</head>
+<body>
+    <div class="atm-container">
+        <h1>Enter your PIN</h1>
+        <div class="pin-display" id="pinDisplay">****</div>
+        <div class="keypad">
+            <div class="key" onclick="appendToPin(1)">1</div>
+            <div class="key" onclick="appendToPin(2)">2</div>
+            <div class="key" onclick="appendToPin(3)">3</div>
+            <div class="key" onclick="appendToPin(4)">4</div>
+            <div class="key" onclick="appendToPin(5)">5</div>
+            <div class="key" onclick="appendToPin(6)">6</div>
+            <div class="key" onclick="appendToPin(7)">7</div>
+            <div class="key" onclick="appendToPin(8)">8</div>
+            <div class="key" onclick="appendToPin(9)">9</div>
+            <div class="key" onclick="clearPin()">C</div>
+            <div class="key" onclick="appendToPin(0)">0</div>
+            <div class="key" onclick="submitPin()">Enter</div>
+            <div class="key" onclick="cancel()">Cancel</div>
+        </div>
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        let pin = '';
+        const correctPin = '1234'; // Set your correct PIN here
+        let attempts = 0;
+
+        function appendToPin(number) {
+            if (pin.length < 4) {
+                pin += number;
+                updateDisplay();
+            }
+        }
+
+        function clearPin() {
+            pin = '';
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            document.getElementById('pinDisplay').innerText = pin.length > 0 ? '*'.repeat(pin.length) : '****';
+        }
+
+        function submitPin() {
+            if (pin === correctPin) {
+                window.location.href = 'info.html'; // Redirect to info.html on success
+            } else {
+                attempts++;
+                if (attempts >= 3) {
+                    document.getElementById('message').innerText = 'Press Cancel to return to Welcome Page.';
+                } else {
+                    document.getElementById('message').innerText = 'Incorrect PIN. Try again.';
+                }
+                clearPin();
+            }
+        }
+
+        function cancel() {
+            window.location.href = 'welcome page.html'; // Redirect to welcome page on cancel
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .atm-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .pin-display {
+            font-size: 24px;
+            margin-bottom: 20px;
+            height: 40px;
+            line-height: 40px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #eaeaea;
+        }
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .key {
+            background: #007BFF;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background 0.3s;
+        }
+        .key:hover {
+            background: #0056b3;
+        }
+        .message {
+            margin-top: 20px;
+            color: red;
+        }
+    </style>
+</body>
+</html>
