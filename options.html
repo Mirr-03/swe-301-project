@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+    <link href="./css/optionsmain.css" rel="stylesheet" />
+    <title>Withdrawal Options</title>
+    <style>
+        /* Add pointer cursor to indicate it's clickable */
+        .v96_743, .v96_744, .v96_741, .v96_748, .v96_746, .v96_747, .v96_737 {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="v96_729">
+        <div class="v96_730"></div>
+        <div class="v96_731"></div>
+        <div class="v96_732"></div>
+        <div class="v96_733"></div>
+        <div class="v96_734"></div>
+        <div class="v96_735"></div>
+        <div class="v96_736"></div>
+        <div class="v96_737"></div>
+        <div class="v96_738"></div>
+        <div class="v96_739"></div>
+        <div class="v96_740"></div>
+        <!-- Divs for clickable amounts -->
+        <div class="v96_741" data-amount="1500.000"></div>
+        <div class="v96_744" data-amount="2000.000"></div>
+        <div class="v96_748" data-amount="100.000"></div>
+        <div class="v96_747" data-amount="500.000"></div>
+        <div class="v96_746" data-amount="1000.000"></div>
+        <div class="v96_743" data-amount="2500.000"></div>
+        <div class="v96_749"></div>
+        <div class="v96_750"></div>
+        <div class="v96_751"></div>
+        <div class="v96_752"></div>
+        <div class="v96_753"></div>
+        <div class="v96_754"></div>
+        <div class="v96_755"></div>
+        <div class="v96_756"></div>
+        <div class="v96_757"></div>
+        <div class="v96_758"></div>
+        <div class="v96_759"></div>
+        <div class="v96_760"></div>
+        <div class="v96_761"></div>
+        <div class="v96_762"></div>
+        <div class="v96_763"></div>
+        <div class="v96_764"></div>
+        <div class="v96_765"></div>
+        <div class="v96_766"></div>
+        <div class="v96_767"></div>
+        <div class="v96_768"></div>
+        <div class="v96_769"></div>
+        <div class="v96_770"></div>
+        <div class="v96_771"></div>
+        <div class="v96_772"></div>
+        <div class="v96_773"></div>
+        <div class="v96_774"></div>
+        <div class="v96_775"></div>
+        <div class="v96_776"></div>
+        <div class="v96_777"></div>
+        <div class="v96_778"></div>
+        <div class="v96_779"></div>
+        <div class="v96_780"></div>
+        <div class="v96_781"></div>
+        <div class="v96_782"></div>
+        <div class="v96_783"></div>
+    </div>
+
+    <script>
+  // Function to initialize available balance from local storage or set it to a default value
+  function initializeBalance() {
+            let availableBalance = parseFloat(localStorage.getItem('availableBalance'));
+            if (isNaN(availableBalance)) {
+                availableBalance = 5000.000;
+                localStorage.setItem('availableBalance', availableBalance);
+            }
+            return availableBalance;
+        }
+
+        let availableBalance = initializeBalance();
+
+        function handleWithdrawal(amount) {
+    let redirectUrl;
+
+    // Map amounts to their corresponding HTML files
+    switch (amount) {
+        case 100.000:
+            redirectUrl = '100.html';
+            break;
+        case 500.000:
+            redirectUrl = '500.html';
+            break;
+        case 1000.000:
+            redirectUrl = '1k.html';
+            break;
+        case 1500.000:
+            redirectUrl = '1.5k.html';
+            break;
+        case 2000.000:
+            redirectUrl = '2k.html';
+            break;
+        case 2500.000:
+            redirectUrl = '2.5k.html';
+            break;
+        default:
+            alert("Invalid amount selected.");
+            return; // Exit if no valid amount is found
+    }
+
+    if (amount <= availableBalance) {
+        availableBalance -= amount;
+        localStorage.setItem('availableBalance', availableBalance.toFixed(3));
+        alert(`Transaction Approved! Withdrawing $${amount.toFixed(3)}. Remaining balance: $${availableBalance.toFixed(3)}`);
+        const urlWithParams = `${redirectUrl}?withdrawn=${amount}`;
+        window.location.href = urlWithParams;
+    } else {
+        alert("Insufficient balance for this transaction.");
+    }
+}
+
+document.querySelectorAll('.v96_741, .v96_744, .v96_748, .v96_747, .v96_746, .v96_743').forEach(div => {
+    div.addEventListener('click', function() {
+        const amount = parseFloat(this.getAttribute('data-amount'));
+        alert(`You selected: $${amount}`); // Debugging alert
+        handleWithdrawal(amount);
+    });
+});
+
+// Function to display the current available balance
+function displayBalance() {
+    alert(`Current available balance: $${availableBalance.toFixed(3)}`);
+}
+
+// Show balance on page load
+window.onload = function() {
+    displayBalance();
+};
+
+// Reset available balance from local storage on page unload
+window.addEventListener('beforeunload', function() {
+    localStorage.removeItem('availableBalance'); // Remove the balance from local storage
+});
+
+// Add event listener for info button
+document.querySelector('.v96_737').addEventListener('click', function() {
+    window.location.href = 'info.html';  // Adjust the file name/path as necessary
+});   
+    </script>
+</body>
+</html>

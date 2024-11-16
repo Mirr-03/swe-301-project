@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+    <link href="./css/1kmain.css" rel="stylesheet" />
+    <title>1k</title>
+</head>
+<style>
+    /* Add pointer cursor to indicate it's clickable */
+    .v96_908 {
+        cursor: pointer;
+    }
+    /* Add pointer cursor to indicate it's clickable */
+    .v96_907 {
+        cursor: pointer;
+    }
+
+    /* Modal styles */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+    <div class="v96_894">
+        <div class="v96_895"></div>
+        <div class="v96_896"></div>
+        <div class="v96_897"></div>
+        <div class="v96_898"></div>
+        <div class="v96_899"></div>
+        <div class="v96_900"></div>
+        <div class="v96_901"></div>
+        <div class="v96_902"></div>
+        <div class="v96_903"></div>
+        <div class="v96_904"></div>
+        <div class="v96_905"></div>
+        <div class="v96_906"></div>
+        <div class="v96_907"></div>
+        <div class="v96_908"></div>
+        <div class="v96_909"></div>
+        <div class="v96_910"></div>
+        <div class="v96_911"></div>
+        <div class="v96_912"></div>
+        <div class="v96_913"></div>
+        <div class="v96_914"></div>
+        <div class="v96_915"></div>
+        <div class="v96_916"></div>
+        <div class="v96_917"></div>
+        <div class="v96_918"></div>
+        <div class="v96_919"></div>
+        <div class="v96_920"></div>
+        <div class="v96_921"></div>
+        <div class="v96_922"></div>
+        <div class="v96_923"></div>
+        <div class="v96_924"></div>
+        <div class="v96_925"></div>
+        <div class="v96_926"></div>
+        <div class="v96_927"></div>
+        <div class="v96_928"></div>
+        <div class="v96_929"></div>
+        <div class="v96_930"></div>
+        <div class="v96_931"></div>
+        <div class="v96_932"></div>
+        <div class="v96_933"></div>
+        <div class="v96_934"></div>
+        <div class="v96_935"></div>
+        <div class="v96_936"></div>
+        <div class="v96_937"></div>
+        <div class="v96_938"></div>
+        <div class="v96_939"></div>
+        <div class="v96_940"></div>
+        <div class="v96_941"></div>
+        <div class="v96_942"></div>
+        <div class="v96_943"></div>
+        <div class="v96_944"></div>
+        <div class="v96_945"></div>
+        <div class="v96_946"></div>
+        <div class="v96_947"></div>
+        <div class="v96_948"></div>
+
+        <div class="modal" id="myModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="receipt">
+                    <h1>ATM Receipt</h1>
+                    <p>Date: <span id="date"></span></p>
+                    <p>Time: <span id="time"></span></p>
+                    <p>Transaction ID: <span id="transaction-id"></span></p>
+                    <p><strong>Amount Withdrawn:</strong> $<span id="withdrawn-amount"></span></p>
+                    <p><strong>Remaining Balance:</strong> $<span id="remaining-balance"></span></p>
+                    <p>Account Number: <span id="account-number"></span></p>
+                    <p>Thank you for using our ATM!</p>
+                    <button id="ok-button">OK</button> <!-- OK button -->
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <script>
+        // Redirect to PIN Entry page when the clickable div is clicked
+        document.querySelector('.v96_908').addEventListener('click', function() {
+           window.location.href = 'options.html';  // Adjust the file name/path as necessary
+       });
+       document.querySelector('.v96_907').addEventListener('click', function() {
+   // Show the modal
+   document.getElementById('myModal').style.display = "block";
+
+   // Get the remaining balance from local storage
+   let availableBalance = parseFloat(localStorage.getItem('availableBalance')) || 5000.000;
+
+   // Populate the receipt data
+   const now = new Date();
+   const date = now.toISOString().split('T')[0];
+   const time = now.toTimeString().split(' ')[0];
+   const transactionId = Math.floor(Math.random() * 1000000);
+   const urlParams = new URLSearchParams(window.location.search);
+   const withdrawnAmount = parseFloat(urlParams.get('withdrawn')) || 0;
+
+   // Calculate the remaining balance after withdrawal
+   const remainingBalance = availableBalance - withdrawnAmount;
+
+   // Display the amounts on the page
+   document.getElementById('remaining-balance').textContent = remainingBalance.toFixed(3);
+   document.getElementById("date").textContent = date;
+   document.getElementById("time").textContent = time;
+   document.getElementById('transaction-id').textContent = transactionId;
+   document.getElementById('withdrawn-amount').textContent = withdrawnAmount.toFixed(3);
+   document.getElementById("account-number").textContent = "123456789"; // Example account number
+});
+// Close the modal when the close button is clicked
+document.querySelector('.close').addEventListener('click', function() {
+   document.getElementById('myModal').style.display = "none";
+});
+
+// Close the modal when clicking outside of it
+window.onclick = function(event) {
+   const modal = document.getElementById('myModal');
+   if (event.target == modal) {
+       modal.style.display = "none";
+   }
+};
+
+// Redirect to index.html when OK is clicked
+document.getElementById('ok-button').addEventListener('click', function() {
+   window.location.href = 'welcome page.html'; // Redirect to index.html
+});
+</script>
+</body>
+</html>
